@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPulse AI - My Complaints</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="nav-brand">
+        <div class="small-logo">CF</div>
+        <span>CampusPulse AI</span>
+    </div>
+
+    <button class="back-btn" onclick="location.href='dashboard.html'">
+        ← Dashboard
+    </button>
+</header>
+
+<main class="container">
+
+    <div class="page-title">
+        <h1>My Complaints</h1>
+        <p>Track all your reported campus issues.</p>
+    </div>
+
+    <div id="complaintList">
+        <p>Loading complaints...</p>
+    </div>
+
+</main>
+
+<script>
+async function loadComplaints() {
+
+    const complaintList = document.getElementById("complaintList");
+
+    try {
+
+        const response = await fetch("http://127.0.0.1:5000/complaints");
+
+        const complaints = await response.json();
+
+        complaintList.innerHTML = "";
+
+        if (complaints.length === 0) {
+            complaintList.innerHTML = "<p>No complaints found.</p>";
+            return;
+        }
+
+        complaints.forEach(function(complaint) {
+
+            let statusClass = "in-progress";
+
+            if (complaint.status === "Resolved") {
+                statusClass = "resolved";
+            }
+
+            complaintList.innerHTML += `
+                <div class="complaint-card">
+
+                    <div>
+                        <span class="category-tag">
+                            ${complaint.category}
+                        </span>
+
+                        <h3>
+                            ${complaint.description}
+                        </h3>
+
+                        <p>
+                            Location: ${complaint.location || "Not provided"}
+                        </p>
+
+                        <small>
+                            Complaint ID: CF${String(complaint.complaint_id).padStart(3, "0")}
+                        </small>
+                    </div>
+
+                    <div>
+                        <span class="status ${statusClass}">
+                            ${complaint.status}
+                        </span>
+
+                        <button
+                            class="view-btn"
+                            onclick="alert(
+                                'Category: ${complaint.category}\\n' +
+                                'Priority: ${complaint.priority}\\n' +
+                                'Department: ${complaint.department}\\n' +
+                                'Status: ${complaint.status}'
+                            )">
+                            View Details
+                        </button>
+                    </div>
+
+                </div>
+            `;
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        complaintList.innerHTML =
+            "<p>Unable to load complaints. Please check the Flask server.</p>";
+    }
+}
+
+loadComplaints();
+</script>
+
+</body>
+</html>

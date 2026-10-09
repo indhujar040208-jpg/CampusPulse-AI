@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPulse AI- Report Issue</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="nav-brand">
+        <div class="small-logo">CF</div>
+        <span>CampusPulse AI</span>
+    </div>
+
+    <button class="back-btn" onclick="location.href='dashboard.html'">
+        ← Dashboard
+    </button>
+</header>
+
+<main class="form-container">
+
+    <div class="page-title">
+        <h1>Report an Issue</h1>
+        <p>Tell us about the problem on campus.</p>
+    </div>
+
+    <form class="issue-form" onsubmit="submitComplaint(event)">
+        <label>Student Name</label>
+
+<input
+    type="text"
+    id="student_name"
+    placeholder="Enter your name"
+    required
+>
+
+        <label>Issue Category</label>
+
+        <select id="category" required>
+            <option value="">Select category</option>
+            <option>Electrical</option>
+            <option>Classroom</option>
+            <option>Lab</option>
+            <option>Wi-Fi</option>
+            <option>Water</option>
+            <option>Cleaning</option>
+            <option>Furniture</option>
+            <option>Other</option>
+        </select>
+
+        <label>Location</label>
+
+        <input
+            type="text"
+            id="location"
+            placeholder="Example: Block A - Room 204"
+            required
+        >
+
+        <label>Problem Description</label>
+
+        <textarea
+            id="description"
+            rows="6"
+            placeholder="Describe the problem clearly..."
+            required
+        ></textarea>
+
+        <label>Upload Image</label>
+
+        <input
+            type="file"
+            id="image"
+            accept="image/*"
+        >
+
+        <div class="image-preview" id="imagePreview"></div>
+
+        <button type="submit" class="primary-btn">
+            Submit Complaint
+        </button>
+
+    </form>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
